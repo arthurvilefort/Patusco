@@ -1,18 +1,19 @@
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
-import ExampleComponent from './components/ExampleComponent.vue';
-import LoginComponent from './components/LoginComponent.vue';
-import RegisterComponent from './components/RegisterComponent.vue';
+import Home from './views/Home.vue';
+import Login from './views/Login.vue';
+import Register from './views/Register.vue';
 import axios from 'axios';
+import vuetify from './plugins/vuetify';
 
 axios.defaults.withCredentials = true;
 
 const routes = [
-    { path: '/', component: ExampleComponent, meta: { requiresAuth: true } },
-    { path: '/login', component: LoginComponent },
-    { path: '/register', component: RegisterComponent },
-    { path: '/example', component: ExampleComponent },
+    { path: '/', component: Home, meta: { requiresAuth: true } },
+    { path: '/login', component: Login },
+    { path: '/register', component: Register },
+    { path: '/example', component: Home },
 ];
 
 const router = createRouter({
@@ -31,4 +32,5 @@ router.beforeEach((to, from, next) => {
 
 const app = createApp(App);
 app.use(router);
+app.use(vuetify);
 app.mount('#app');
