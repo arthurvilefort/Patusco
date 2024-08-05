@@ -19,9 +19,9 @@
                                 :rules="[v => !!v || 'O tipo de usuário é obrigatório']"
                                 required
                             ></v-select>
-                            <v-btn type="submit" color="primary" block class="mb-2">Sign Up</v-btn>
+                            <v-btn type="submit" color="primary" block class="mb-2">Cadastrar</v-btn>
                         </v-form>
-                        <v-btn text class="mt-4" @click="goToLogin">Already have an account? Sign In</v-btn>
+                        <v-btn text class="mt-4" @click="goToLogin">ja possui uma conta? Fazer login</v-btn>
                     </v-card-text>
                 </v-card>
             </v-col>

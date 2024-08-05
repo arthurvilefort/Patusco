@@ -4,7 +4,7 @@
             <v-col cols="12" md="4">
                 <v-card class="pa-5">
                     <v-card-title>
-                        <h2 class="mb-5">Sign In</h2>
+                        <h2 class="mb-5">Clinica Patusco</h2>
                     </v-card-title>
                     <v-card-text>
                         <v-form @submit.prevent="login">
@@ -21,9 +21,9 @@
                                 required
                                 class="mb-4"
                             ></v-text-field>
-                            <v-btn type="submit" color="primary" block class="mb-2">Sign In</v-btn>
+                            <v-btn type="submit" color="primary" block class="mb-2">Logar</v-btn>
                         </v-form>
-                        <v-btn text class="mb-6" @click="goToRegister">Register</v-btn>
+                        <v-btn text class="mb-6" @click="goToRegister">Cadastrar</v-btn>
                     </v-card-text>
                 </v-card>
             </v-col>
