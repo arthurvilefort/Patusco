@@ -66,22 +66,6 @@
                   required
                   class="mb-4"
                 ></v-select>
-                <v-select
-                  v-model="editedConsulta.medico_id"
-                  :items="medicos"
-                  item-text="name"
-                  item-value="id"
-                  label="Médico"
-                  class="mb-4"
-                ></v-select>
-                <v-select
-                  v-model="editedConsulta.status"
-                  :items="statuses"
-                  label="Status"
-                  required
-                  class="mb-4"
-                ></v-select>
-                <v-text-field v-model="editedConsulta.obs" label="Observações" required></v-text-field>
               </v-form>
             </v-card-text>
             <v-card-actions>

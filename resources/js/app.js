@@ -9,8 +9,18 @@ import pets from './views/Pets.vue';
 import users from './views/Users.vue';
 import Register from './views/Register.vue';
 import RegisterPet from './views/RegisterPet.vue'; 
+import fechadoscliente from './views/FechadoCliente.vue'; 
+import fechadosmedico from './views/FechadoMedico.vue'; 
+import fechadosrec from './views/FechadoRec.vue'; 
+import abertosatribuidos from './views/AbertosAtribuidosRec.vue'; 
+import abertosrec from './views/AbertosRec.vue'; 
+import abertoscliente from './views/AbertosCliente.vue'; 
+import abertosmedico from './views/AbertosMedico.vue'; 
 import axios from 'axios';
 import vuetify from './plugins/vuetify';
+// Importação global do vue-multiselect
+import Multiselect from '@vueform/multiselect';
+import '@vueform/multiselect/themes/default.css';
 
 axios.defaults.withCredentials = true;
 
@@ -24,6 +34,14 @@ const routes = [
     { path: '/pets', component: pets },
     { path: '/users', component: users },
     { path: '/register-pet', component: RegisterPet }, 
+    { path: '/fechados/cliente', component: fechadoscliente }, 
+    { path: '/medico/fechados', component: fechadosmedico }, 
+    { path: '/fechados/rec', component: fechadosrec }, 
+    { path: '/abertos/atribuidos', component: abertosatribuidos }, 
+    { path: '/abertos/rec', component: abertosrec }, 
+    { path: '/abertos/cliente', component: abertoscliente }, 
+    { path: '/abertos/medico', component: abertosmedico }, 
+    { path: '/users', component: users }, 
 
 ];
 
@@ -42,6 +60,8 @@ router.beforeEach((to, from, next) => {
 });
 
 const app = createApp(App);
+app.component('Multiselect', Multiselect); // Registro global do componente
+
 app.use(router);
 app.use(vuetify);
 app.mount('#app');

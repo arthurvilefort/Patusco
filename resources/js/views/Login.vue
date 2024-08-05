@@ -24,7 +24,6 @@
                             <v-btn type="submit" color="primary" block class="mb-2">Sign In</v-btn>
                         </v-form>
                         <v-btn text class="mb-6" @click="goToRegister">Register</v-btn>
-                        <v-btn text class="mb-6" @click="forgotPassword">Forgot your password?</v-btn>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -61,9 +60,6 @@ export default {
             } catch (error) {
                 console.error('Login failed', error);
             }
-        },
-        forgotPassword() {
-            alert('Redirect to forgot password page.');
         },
         goToRegister() {
             this.$router.push('/register');

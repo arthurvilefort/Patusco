@@ -9,7 +9,7 @@
                 <v-card-title>
                   <h3>Consultas</h3>
                   <v-spacer></v-spacer>
-                  <v-btn v-if="userLevel === 1" @click="goToAtribuidos" color="primary">Abertos Atribuídos</v-btn>
+                  <v-btn v-if="userLevel === 1" @click="goToAtribuidos" color="primary">Abertos Sem Atribuição</v-btn>
                   <v-btn @click="goToFechados" color="primary">Consultas Encerradas</v-btn>
                 </v-card-title>
                 <v-card-text>
@@ -85,6 +85,7 @@
               </v-form>
             </v-card-text>
             <v-card-actions>
+              <v-btn color="red darken-1" text @click="deleteConsulta">Excluir</v-btn>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeEditModal">Cancelar</v-btn>
               <v-btn color="blue darken-1" text @click="updateConsulta">Salvar</v-btn>
@@ -156,26 +157,28 @@
       },
     },
     methods: {
-      async fetchConsultas() {
-        try {
-          const response = await axios.get('/api/consultas', {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
-            },
-          });
-  
-          if (response.status === 200) {
-            this.consultas = response.data.map(consulta => ({
-              ...consulta,
-              turno: consulta.turno === 0 ? 'Manhã' : 'Tarde',
-            }));
-          } else {
-            console.error('Failed to fetch consultas', response.data);
-          }
-        } catch (error) {
-          console.error('Error fetching consultas', error);
-        }
-      },
+  async fetchConsultas() {
+    try {
+      const response = await axios.get('/api/abertos/atribuidos', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('Consultas recebidas:', response.data);  // Adicionando log para inspecionar os dados
+        this.consultas = response.data.map(consulta => ({
+          ...consulta,
+          turno: consulta.turno === 0 ? 'Manhã' : 'Tarde',
+        }));
+      } else {
+        console.error('Failed to fetch consultas', response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching consultas', error);
+    }
+  },
+
       async fetchMedicos() {
         try {
           const response = await axios.get('/api/medicos', {
@@ -220,7 +223,7 @@
         this.$router.push(route);
       },
       goToAtribuidos() {
-        this.$router.push('/abertos/atribuidos');
+        this.$router.push('/abertos/rec');
       },
       async fetchUserLevel() {
         try {
@@ -267,7 +270,7 @@
         });
   
         try {
-          const response = await axios.put(`/api/consultas/${this.editedConsulta.id}`, {
+          const response = await axios.put(`/api/abertos/atribuidos/${this.editedConsulta.id}`, {
             sintomas: this.editedConsulta.sintomas,
             data_atendimento: this.editedConsulta.data_atendimento,
             turno: this.editedConsulta.turno === 'Manhã' ? 0 : 1,
@@ -294,6 +297,28 @@
           console.error('Error updating consulta', error);
         }
       },
+      async deleteConsulta() {
+    try {
+      const response = await axios.delete(`/api/consultas/${this.editedConsulta.id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
+        },
+      });
+  
+      if (response.status === 200) {
+        const index = this.consultas.findIndex(consulta => consulta.id === this.editedConsulta.id);
+        if (index !== -1) {
+          this.consultas.splice(index, 1);
+        }
+        this.closeEditModal();
+        this.fetchConsultas();
+      } else {
+        console.error('Failed to delete consulta', response.data);
+      }
+    } catch (error) {
+      console.error('Error deleting consulta', error);
+    }
+  },
     },
     async created() {
       await this.fetchUserLevel();

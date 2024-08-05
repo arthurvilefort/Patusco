@@ -13,11 +13,13 @@
     "dependencies": {
         "@mdi/font": "^7.4.47",
         "@vitejs/plugin-vue": "^5.1.2",
+        "@vueform/multiselect": "^2.6.9",
         "ag-grid-community": "^32.0.2",
         "ag-grid-vue3": "^32.0.2",
         "moment": "^2.30.1",
         "vue": "^3.2.47",
         "vue-good-table": "^2.21.11",
+        "vue-multiselect": "^3.0.0-beta.3",
         "vue-router": "^4.4.2",
         "vuetify": "^3.7.0-beta.1"
     }

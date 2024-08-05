@@ -66,14 +66,7 @@
                   required
                   class="mb-4"
                 ></v-select>
-                <v-select
-                  v-model="editedConsulta.medico_id"
-                  :items="medicos"
-                  item-text="name"
-                  item-value="id"
-                  label="Médico"
-                  class="mb-4"
-                ></v-select>
+               
                 <v-select
                   v-model="editedConsulta.status"
                   :items="statuses"
@@ -158,7 +151,7 @@
     methods: {
       async fetchConsultas() {
         try {
-          const response = await axios.get('/api/consultas', {
+          const response = await axios.get('/api/abertos/medico', {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
             },
@@ -267,7 +260,7 @@
         });
   
         try {
-          const response = await axios.put(`/api/consultas/${this.editedConsulta.id}`, {
+          const response = await axios.put(`/api/abertos/medico/${this.editedConsulta.id}`, {
             sintomas: this.editedConsulta.sintomas,
             data_atendimento: this.editedConsulta.data_atendimento,
             turno: this.editedConsulta.turno === 'Manhã' ? 0 : 1,

@@ -7,10 +7,10 @@
             <v-col cols="12" md="10">
               <v-card class="pa-5">
                 <v-card-title>
-                  <h3>Consultas</h3>
+                  <h3>Consultas Encerradas</h3>
                   <v-spacer></v-spacer>
                   <v-btn v-if="userLevel === 1" @click="goToAtribuidos" color="primary">Abertos Atribuídos</v-btn>
-                  <v-btn @click="goToFechados" color="primary">Consultas Encerradas</v-btn>
+                  <v-btn @click="goToFechados" color="primary">Consultas Abertas</v-btn>
                 </v-card-title>
                 <v-card-text>
                   <v-text-field
@@ -34,11 +34,7 @@
                     <template v-slot:item.created_at="{ item }">
                       <span>{{ formatDate(item.created_at) }}</span>
                     </template>
-                    <template v-slot:item.action="{ item }">
-                      <v-btn icon @click="openEditModal(item)">
-                        <v-icon>mdi-pencil</v-icon>
-                      </v-btn>
-                    </template>
+                    
                   </v-data-table>
                 </v-card-text>
               </v-card>
@@ -120,7 +116,6 @@
           { title: 'Médico', key: 'medico_nome' },
           { title: 'Observações', key: 'obs' },
           { title: 'Criado em', key: 'created_at' },
-          { title: 'Ações', key: 'action', sortable: false },
         ],
         userLevel: null,
         editDialog: false,
@@ -158,7 +153,7 @@
     methods: {
       async fetchConsultas() {
         try {
-          const response = await axios.get('/api/consultas', {
+          const response = await axios.get('/api/fechados/cliente', {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
             },
@@ -207,14 +202,14 @@
         let route;
         switch (this.userLevel) {
           case 1:
-            route = '/fechados/rec';
+            route = '/recep/abertos';
             break;
           case 2:
-            route = '/medico/fechados';
+            route = '/medico/abertos';
             break;
           case 0:
           default:
-            route = '/fechados/cliente';
+            route = '/abertos/cliente';
             break;
         }
         this.$router.push(route);
@@ -267,7 +262,7 @@
         });
   
         try {
-          const response = await axios.put(`/api/consultas/${this.editedConsulta.id}`, {
+          const response = await axios.put(`/api/fechados/cliente${this.editedConsulta.id}`, {
             sintomas: this.editedConsulta.sintomas,
             data_atendimento: this.editedConsulta.data_atendimento,
             turno: this.editedConsulta.turno === 'Manhã' ? 0 : 1,

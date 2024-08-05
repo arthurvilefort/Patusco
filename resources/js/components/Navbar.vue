@@ -2,9 +2,9 @@
     <v-app-bar app color="primary" dark>
         <v-toolbar-title  @click="$router.push('/')">Clinica Patusco</v-toolbar-title>
         <div class="menu-buttons">
-            <v-btn text v-if="userLevel === 0" @click="$router.push('/agendamento')">Agendar Consulta</v-btn>
-            <v-btn text @click="$router.push('/consultas')">Consultas</v-btn>
-            <v-btn text v-if="userLevel === 0" @click="$router.push('/pets')">Pets</v-btn>
+            <v-btn text v-if="userLevel !== 2" @click="$router.push('/agendamento')">Agendar Consulta</v-btn>
+            <v-btn text @click="goToConsultas">Consultas Abertas</v-btn>
+            <v-btn text v-if="userLevel !== 2" @click="$router.push('/pets')">Pets</v-btn>
             <v-btn text v-if="userLevel === 1" @click="$router.push('/users')">Users</v-btn>
         </div>
         <v-spacer></v-spacer>
@@ -55,6 +55,24 @@ export default {
             localStorage.removeItem('auth_token');
             this.$router.push('/login');
         },
+        goToConsultas() {
+    let route;
+    switch (this.userLevel) {
+      case 0:
+        route = '/abertos/cliente';
+        break;
+      case 1:
+        route = '/abertos/rec';
+        break;
+      case 2:
+        route = '/abertos/medico';
+        break;
+      default:
+        route = '/consultas'; 
+        break;
+    }
+    this.$router.push(route);
+  },
     },
     created() {
         this.fetchUserData();

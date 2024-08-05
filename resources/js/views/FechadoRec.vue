@@ -7,10 +7,10 @@
             <v-col cols="12" md="10">
               <v-card class="pa-5">
                 <v-card-title>
-                  <h3>Consultas</h3>
+                  <h3>Consultas Encerradas</h3>
                   <v-spacer></v-spacer>
                   <v-btn v-if="userLevel === 1" @click="goToAtribuidos" color="primary">Abertos Atribuídos</v-btn>
-                  <v-btn @click="goToFechados" color="primary">Consultas Encerradas</v-btn>
+                  <v-btn @click="goToFechados" color="primary">Consultas Abertas</v-btn>
                 </v-card-title>
                 <v-card-text>
                   <v-text-field
@@ -52,28 +52,7 @@
             </v-card-title>
             <v-card-text>
               <v-form ref="editForm">
-                <v-text-field v-model="editedConsulta.sintomas" label="Sintomas" required></v-text-field>
-                <v-text-field
-                  v-model="editedConsulta.data_atendimento"
-                  label="Data de Atendimento"
-                  type="date"
-                  required
-                ></v-text-field>
-                <v-select
-                  v-model="editedConsulta.turno"
-                  :items="turnos"
-                  label="Turno"
-                  required
-                  class="mb-4"
-                ></v-select>
-                <v-select
-                  v-model="editedConsulta.medico_id"
-                  :items="medicos"
-                  item-text="name"
-                  item-value="id"
-                  label="Médico"
-                  class="mb-4"
-                ></v-select>
+               
                 <v-select
                   v-model="editedConsulta.status"
                   :items="statuses"
@@ -81,10 +60,11 @@
                   required
                   class="mb-4"
                 ></v-select>
-                <v-text-field v-model="editedConsulta.obs" label="Observações" required></v-text-field>
+               
               </v-form>
             </v-card-text>
             <v-card-actions>
+              <v-btn color="red darken-1" text @click="deleteConsulta">Excluir</v-btn>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeEditModal">Cancelar</v-btn>
               <v-btn color="blue darken-1" text @click="updateConsulta">Salvar</v-btn>
@@ -158,7 +138,7 @@
     methods: {
       async fetchConsultas() {
         try {
-          const response = await axios.get('/api/consultas', {
+          const response = await axios.get('/api/fechados/rec', {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
             },
@@ -207,14 +187,14 @@
         let route;
         switch (this.userLevel) {
           case 1:
-            route = '/fechados/rec';
+            route = '/recep/abertos';
             break;
           case 2:
-            route = '/medico/fechados';
+            route = '/medico/abertos';
             break;
           case 0:
           default:
-            route = '/fechados/cliente';
+            route = '/abertos/cliente';
             break;
         }
         this.$router.push(route);
@@ -267,7 +247,7 @@
         });
   
         try {
-          const response = await axios.put(`/api/consultas/${this.editedConsulta.id}`, {
+          const response = await axios.put(`/api/fechados/rec${this.editedConsulta.id}`, {
             sintomas: this.editedConsulta.sintomas,
             data_atendimento: this.editedConsulta.data_atendimento,
             turno: this.editedConsulta.turno === 'Manhã' ? 0 : 1,
@@ -294,6 +274,28 @@
           console.error('Error updating consulta', error);
         }
       },
+      async deleteConsulta() {
+    try {
+      const response = await axios.delete(`/api/consultas/${this.editedConsulta.id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
+        },
+      });
+  
+      if (response.status === 200) {
+        const index = this.consultas.findIndex(consulta => consulta.id === this.editedConsulta.id);
+        if (index !== -1) {
+          this.consultas.splice(index, 1);
+        }
+        this.closeEditModal();
+        this.fetchConsultas();
+      } else {
+        console.error('Failed to delete consulta', response.data);
+      }
+    } catch (error) {
+      console.error('Error deleting consulta', error);
+    }
+  },
     },
     async created() {
       await this.fetchUserLevel();

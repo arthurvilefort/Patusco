@@ -16,4 +16,11 @@ class HomeController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getMedicos()
+    {
+        $medicos = User::where('level', 2)->get(['id', 'name']); // Certifique-se de obter os campos corretos
+        return response()->json($medicos);
+    }
+
 }
