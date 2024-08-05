@@ -30,7 +30,7 @@
                   <v-select
                     v-model="selectedPet"
                     :items="petNames"
-                    label="Selecione um Pet"
+                    label="Selecione um Pet caso não possua, cadastre um Pet na aba Pets!"
                     @change="updatePetDetails"
                     class="mb-4"
                   ></v-select>
