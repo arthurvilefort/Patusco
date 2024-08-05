@@ -1,66 +1,152 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Projeto Clinica Patusco
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Descrição
 
-## About Laravel
+Este é um projeto de gerenciamento de consultas para uma clínica veterinária. O sistema permite que usuários façam agendamentos, que médicos visualizem e gerenciem consultas, e que recepcionistas atribuam consultas e visualizem o status das mesmas.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Funcionalidades
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Usuários:**
+  - Agendar consultas.
+  - Visualizar consultas agendadas.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Recepcionistas:**
+  - Visualizar todas as consultas.
+  - Atribuir médicos às consultas.
+  - Alterar o status das consultas.
 
-## Learning Laravel
+- **Médicos:**
+  - Visualizar consultas atribuídas.
+  - Alterar o status das consultas.
+  - Adicionar observações às consultas.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Tecnologias Utilizadas
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Backend:**
+  - Laravel 8
+  - MySQL
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Frontend:**
+  - Vue.js 3
+  - Vuetify
+  - Axios
 
-## Laravel Sponsors
+- **Outras Ferramentas:**
+  - Composer
+  - Node.js
+  - NPM
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Requisitos
 
-### Premium Partners
+- PHP >= 7.4
+- Composer
+- Node.js
+- NPM
+- MySQL
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Instalação
 
-## Contributing
+1. Clone o repositório:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```bash
+    git clone https://github.com/seu-usuario/projeto-clinica-patusco.git
+    cd projeto-clinica-patusco
+    ```
 
-## Code of Conduct
+2. Instale as dependências do backend:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```bash
+    composer install
+    ```
 
-## Security Vulnerabilities
+3. Instale as dependências do frontend:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```bash
+    npm install
+    ```
 
-## License
+4. Configure o arquivo `.env`:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```bash
+    cp .env.example .env
+    ```
+
+5. Gere a chave da aplicação:
+
+    ```bash
+    php artisan key:generate
+    ```
+
+6. Configure o banco de dados no arquivo `.env`:
+
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=nome_do_banco
+    DB_USERNAME=seu_usuario
+    DB_PASSWORD=sua_senha
+    ```
+
+7. Execute as migrações e seeders:
+
+    ```bash
+    php artisan migrate --seed
+    ```
+
+8. Inicie o servidor de desenvolvimento do backend:
+
+    ```bash
+    php artisan serve
+    ```
+
+9. Inicie o servidor de desenvolvimento do frontend:
+
+    ```bash
+    npm run dev
+    ```
+
+## Uso
+
+1. Acesse o sistema através do navegador no endereço:
+
+    ```
+    http://localhost:8000
+    ```
+
+2. Faça o login com as credenciais de usuário, recepcionista ou médico.
+
+3. Navegue pelo sistema para gerenciar consultas conforme as permissões do seu usuário.
+
+## Rotas da API
+
+### Usuários
+
+- `GET /api/user` - Retorna os dados do usuário logado.
+- `POST /api/register` - Registra um novo usuário.
+- `POST /api/login` - Faz login de um usuário.
+- `POST /api/logout` - Faz logout do usuário logado.
+
+### Consultas
+
+- `GET /api/consultas` - Retorna todas as consultas.
+- `POST /api/agendamentos` - Agenda uma nova consulta.
+- `PUT /api/consultas/{id}` - Atualiza uma consulta.
+- `DELETE /api/consultas/{id}` - Exclui uma consulta.
+
+### Pets
+
+- `GET /api/showpets` - Retorna todos os pets do usuário logado.
+- `POST /api/pets` - Cadastra um novo pet.
+- `PUT /api/pets/{id}` - Atualiza os dados de um pet.
+
+### Médicos
+
+- `GET /api/medicos` - Retorna todos os médicos.
+
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE.md para detalhes.
+
+
