@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laravel Vue Example</title>
+    <title>Clinica Patusco</title>
     @vite('resources/js/app.js')
 </head>
 <body>

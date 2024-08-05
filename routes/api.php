@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::get('/showpets', [PetController::class, 'index']);   
+    Route::post('/pets', [PetController::class, 'store']);
+    Route::put('/pets/{id}', [PetController::class, 'update']);
+
+
+ 
 });

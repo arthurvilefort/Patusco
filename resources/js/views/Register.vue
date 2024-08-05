@@ -7,33 +7,18 @@
                         <h2 class="mb-5">Sign Up</h2>
                     </v-card-title>
                     <v-card-text>
-                        <v-form @submit.prevent="register">
-                            <v-text-field
-                                v-model="name"
-                                label="Name"
+                        <v-form @submit.prevent="register" ref="form">
+                            <v-text-field v-model="name" label="Name" required class="mb-4"></v-text-field>
+                            <v-text-field v-model="email" label="Email" required class="mb-4"></v-text-field>
+                            <v-text-field v-model="password" label="Password" type="password" required class="mb-4"></v-text-field>
+                            <v-text-field v-model="password_confirmation" label="Confirm Password" type="password" required class="mb-4"></v-text-field>
+                            <v-select
+                                v-model="selectedLevel"
+                                :items="levels"
+                                label="Tipo de Usuario"
+                                :rules="[v => !!v || 'O tipo de usuário é obrigatório']"
                                 required
-                                class="mb-4"
-                            ></v-text-field>
-                            <v-text-field
-                                v-model="email"
-                                label="Email"
-                                required
-                                class="mb-4"
-                            ></v-text-field>
-                            <v-text-field
-                                v-model="password"
-                                label="Password"
-                                type="password"
-                                required
-                                class="mb-4"
-                            ></v-text-field>
-                            <v-text-field
-                                v-model="password_confirmation"
-                                label="Confirm Password"
-                                type="password"
-                                required
-                                class="mb-4"
-                            ></v-text-field>
+                            ></v-select>
                             <v-btn type="submit" color="primary" block class="mb-2">Sign Up</v-btn>
                         </v-form>
                         <v-btn text class="mt-4" @click="goToLogin">Already have an account? Sign In</v-btn>
@@ -55,25 +40,39 @@ export default {
             email: '',
             password: '',
             password_confirmation: '',
+            selectedLevel: '',
+            levels: ['Cliente', 'Recepcionista', 'Medico'],
         };
     },
     methods: {
+        getLevelValue(levelText) {
+            const levelMap = {
+                'Cliente': 0,
+                'Recepcionista': 1,
+                'Medico': 2,
+            };
+            return levelMap[levelText] ?? 0;
+        },
         async register() {
-            try {
-                const response = await axios.post('/api/register', {
-                    name: this.name,
-                    email: this.email,
-                    password: this.password,
-                    password_confirmation: this.password_confirmation,
-                });
+            if (this.$refs.form.validate()) {
+                try {
+                    const level = this.getLevelValue(this.selectedLevel);
+                    const response = await axios.post('/api/register', {
+                        name: this.name,
+                        email: this.email,
+                        password: this.password,
+                        password_confirmation: this.password_confirmation,
+                        level: level,
+                    });
 
-                if (response.status === 201) {
-                    this.$router.push('/login');
-                } else {
-                    console.error('Registration failed', response.data);
+                    if (response.status === 201) {
+                        this.$router.push('/login');
+                    } else {
+                        console.error('Registration failed', response.data);
+                    }
+                } catch (error) {
+                    console.error('Registration failed', error);
                 }
-            } catch (error) {
-                console.error('Registration failed', error);
             }
         },
         goToLogin() {
@@ -88,8 +87,9 @@ export default {
     border-radius: 20px;
     overflow: hidden;
 }
+
 .blue-background {
-    background-color: #1976D2; /* Use the desired blue color */
+    background-color: #1976D2;
     height: 100vh;
     display: flex;
     align-items: center;
